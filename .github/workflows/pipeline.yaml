@@ -5,7 +5,7 @@ env:
   NPM_CONFIG_PREFER_OFFLINE: "true"
 
 jobs:
-  publish:
+  verification:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
