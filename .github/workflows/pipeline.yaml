@@ -22,6 +22,7 @@ jobs:
   # TODO: Run tests
 
   assembly:
+    needs: verification
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
