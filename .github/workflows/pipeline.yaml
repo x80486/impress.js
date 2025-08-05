@@ -1,0 +1,42 @@
+name: Automates the Verification, Testing, and Building Process
+
+env:
+  NPM_CONFIG_LOGLEVEL: "warn"
+  NPM_CONFIG_PREFER_OFFLINE: "true"
+
+jobs:
+  publish:
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: npm
+          node-version: ${{ matrix.node }}
+          registry-url: https://registry.npmjs.org
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Lint code
+        run: npm run lint
+      # TODO: Run tests
+      - name: Build release candidate
+        run: npm run build
+    strategy:
+      matrix:
+        node:
+          - 22
+        os:
+          - ubuntu-latest
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
