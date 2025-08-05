@@ -5,7 +5,7 @@ env:
   NPM_CONFIG_PREFER_OFFLINE: "true"
 
 jobs:
-  verification:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -18,15 +18,24 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: Install dependencies
         run: npm clean-install
-      - name: Lint code
-        run: npm run lint
-      # TODO: Run tests
-      - name: Build release candidate
-        run: npm run build
     strategy:
       matrix:
         node-version:
           - 22
+
+  verification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint code
+        run: npm run lint
+
+  # TODO: Run tests
+
+  assembly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build release candidate
+        run: npm run build
 
 on:
   pull_request:
