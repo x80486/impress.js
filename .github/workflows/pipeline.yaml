@@ -24,6 +24,7 @@ jobs:
           - 22
 
   verification:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Lint code
@@ -32,6 +33,7 @@ jobs:
   # TODO: Run tests
 
   assembly:
+    needs: verification
     runs-on: ubuntu-latest
     steps:
       - name: Build release candidate
